@@ -1,0 +1,27 @@
+/*Код, который будет считывает с клавиатуры ссылку на файл в интернете, 
+скачивает его и сохраняет во временный файл*/
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Scanner;
+
+/* 
+Временное сохранение файла
+*/
+
+public class Solution {
+    public static void main(String[] args) throws IOException {
+        Scanner scanner = new Scanner(System.in);
+        String line = scanner.nextLine(); //считываем с клавиатуры ссылку на файл в интернете
+
+        URL url = new URL(line); //Создаем объект URL с путем к странице
+        InputStream input = url.openStream(); //Получаем InputStream у интернет-объекта
+        Path file= Files.createTempFile(null, null); //Создаем временный файл
+        byte[] buffer = input.readAllBytes(); //Читаем все байты и возвращаем массив байт
+        String str = new String(buffer); //Преобразуем массив в строку
+        Files.write(file, buffer); //Сохраняем ссылку во временный файл   
+    }
+}
